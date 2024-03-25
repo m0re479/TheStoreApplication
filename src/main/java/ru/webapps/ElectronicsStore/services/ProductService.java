@@ -17,15 +17,15 @@ public class ProductService {
     private List<Product> products = new ArrayList<Product>();
     private ProductRepository productRepository;
 
-    @PostConstruct
-    public void loadProductInDB(){
-       products.add(new Product(++ID, "ff"));
-       products.add(new Product(++ID, "ll"));
-       products.add(new Product(++ID, "pp"));
-    }
+//    @PostConstruct
+//    public void loadProductInDB(){
+//       products.add(new Product(++ID, "ff"));
+//       products.add(new Product(++ID, "ll"));
+//       products.add(new Product(++ID, "pp"));
+//    }
 
     public List<Product> allProducts(){
-        return products;
+        return this.productRepository.findAll();
     }
 
     public Product productById(Long id){
