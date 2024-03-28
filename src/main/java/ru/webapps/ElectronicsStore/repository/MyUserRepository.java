@@ -8,5 +8,5 @@ import ru.webapps.ElectronicsStore.models.MyUser;
 
 @RepositoryRestResource
 public interface MyUserRepository extends JpaRepository<MyUser, Long> {
-    Optional<MyUser> findByName (String username);
+    Optional<MyUser> findByEmail (String email);
 }

@@ -1,5 +1,6 @@
 package ru.webapps.ElectronicsStore.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,31 +18,32 @@ import ru.webapps.ElectronicsStore.services.MyUserDetailService;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-    @Bean
-    public UserDetailsService userDetailsService(){
-        return new MyUserDetailService();
-    }
+    private final MyUserDetailService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("api/v1/products/welcome",
-                                        "api/v1/products/signUp",
+        http.authorizeHttpRequests(auth -> auth.requestMatchers(
+                                        "api/v1/registration",
+                                        "api/v1/login",
+                                        "api/v1/products/welcome",
                                         "api/v1/products/allProd",
-                                        "api/v1/products/all_users",
-                                        "api/v1/products/new_prod",
-                                        "api/v1/products/delProd/{ID}"
+                                        "api/v1/products/allProd/**"
                                 ).permitAll()
-                        .requestMatchers("api/v1/products/**").permitAll()//authenticated()
+                        .requestMatchers("api/v1/products/newProd").authenticated()
+                //.anyRequest().authenticated()
                         )
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll).build();
+                //.formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .formLogin(form -> form.loginPage("/api/v1/login").permitAll())
+                .logout(logout -> logout.permitAll());
+        return http.build();
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }

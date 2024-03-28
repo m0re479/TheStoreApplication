@@ -10,10 +10,8 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
-#  application:
-#    info:
-#      api: "/api/v1/person"
   web:
     resources:
       static-locations: classpath:/templates, classpath:/static/css
-
+#  freemarker:
+#    expose-request-attributes: true

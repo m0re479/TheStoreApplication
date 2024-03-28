@@ -22,9 +22,9 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="api/v1/products/welcome" class="nav-link px-2 text-secondary">Главная</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">Адреса</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">О нас</a></li>
+                    <li><a href="/api/v1/products/welcome" class="nav-link px-2 text-white">Главная</a></li>
+                    <li><a href="/api/v1/products/newProd" class="nav-link px-2 text-white">Новый товар</a></li>
+                    <li><a href="/api/v1/products/allProd" class="nav-link px-2 text-white">Все товары</a></li>
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -32,12 +32,12 @@
                 </form>
 
                 <div class="text-end">
-<!--                    <form action="api/v1/products/signIn">-->
-                        <button onclick="document.location='signIn'" type="button" class="btn btn-outline-light me-2">Войти</button>
-<!--                    </form>-->
-<!--                    <form action="api/v1/products/signUp">-->
-                        <button onclick="document.location='signUp'" type="button" class="btn btn-warning">Зарегистрироваться</button>
-<!--                    </form>-->
+                    <form action="/logout" method="post"><br>
+                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                        <input type="submit" value="Выйти" class="btn btn-outline-light me-2"/>
+                    </form>
+                        <button onclick="document.location='/api/v1/login'" type="button" class="btn btn-outline-light me-2">Войти</button>
+                        <button onclick="document.location='/api/v1/registration'" type="button" class="btn btn-warning">Зарегистрироваться</button>
                 </div>
             </div>
         </div>

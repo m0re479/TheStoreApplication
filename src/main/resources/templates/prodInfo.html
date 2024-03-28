@@ -12,9 +12,14 @@
 <body>
 <header th:insert="~{blocks/header :: header}"></header>
 
-<div th:each="el : ${products}" class="alert alert-info mt-2">
+<div th:each="el : ${product}" class="alert alert-info mt-2">
     <h3 th:text="${el.name}"></h3>
-    <a th:href="'/api/v1/products/allProd/'+ ${el.id}" class="btn btn-warning">Подробнее</a>
+    <p><b>Количество: </b> <span th:text="${el.quantity}"></span></p>
+    <p><b>Описание: </b> <span th:text="${el.description}"></span></p>
+    <a th:href="'/api/v1/products/allProd/'+ ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a><br>
+    <form th:action="'/api/v1/products/allProd/'+ ${el.id} + '/remove'" method="post">
+        <button class="btn btn-warning" type="submit">Удалить</button>
+    </form>
 </div>
 
 <footer th:insert="~{blocks/footer :: footer}"></footer>

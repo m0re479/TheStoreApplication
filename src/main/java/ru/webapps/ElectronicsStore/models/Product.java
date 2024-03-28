@@ -19,8 +19,16 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private Integer quantity;
+    private String description;
 
     public Product(String name){
         this.name = name;
+    }
+
+    public Product(String name, Integer quantity, String description) {
+        this.name = name;
+        this.quantity = quantity;
+        this.description = description;
     }
 }

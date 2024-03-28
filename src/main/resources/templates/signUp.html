@@ -1,138 +1,43 @@
 <!DOCTYPE html>
-<html lang="ru", xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Регистрация</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+    <title>Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
 
-        .container {
-            width: 50%;
-            margin: 50px auto;
-            background-color: #e0e9f0;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center; /* Добавлено для центрирования содержимого */
-        }
-
-        h2 {
-            text-align: center;
-            color: #2a5885;
-        }
-
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        label {
-            font-weight: bold;
-            color: #2a5885;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            background-color: #2a5885;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #1e3a57;
-        }
-
-        .error {
-            color: red;
-            font-size: 12px;
-        }
-
-        .signInLink {
-            display: block; /* Делаем ссылку блочным элементом */
-            color: #2a5885;
-            text-decoration: none;
-            margin-top: 10px;
-        }
-
-        .signInLink:hover {
-            color: #1e3a57;
-        }
-    </style>
 </head>
 <body>
-<h1>Hello!!!!!</h1>
-<div class="container">
-    <h2>User Registration Form</h2>
-    <form action="#" th:action="${link} + @{/sign-up/save}" th:object="${user}" method="post" onsubmit="return validateForm()">
-        <label>Login*:</label><br>
-        <input type="text" id="login" name="login" th:field="*{login}" required><br>
-        <span id="loginError" class="error"><br></span>
-        <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="error"><br></span>
-        <label>Phone:</label><br>
-        <input type="text" th:field="*{phone}"><br>
+<!--<header th:insert="~{blocks/header :: header}"></header>-->
+<div class="tab-content">
+        <h1>Регистрация</h1>
 
-        <label>Email:</label><br>
-        <input type="email" th:field="*{email}"><br>
+        <form action="/api/v1/registration" method="post">
+            <div class="top-row">
+                <div class="field-wrap">
+                    <label for="name">First Name<span class="req">*</span></label>
+                    <input id="name" type="text" name="name" placeholder="Имя"/>
+                </div>
+            </div>
+            <div class="field-wrap">
+                <label for="email">Email<span class="req">*</span></label>
+                <input id="email" type="email" name="email" placeholder="Email" />
+            </div>
+            <div class="field-wrap">
+                <label for="password">Set A Password<span class="req">*</span></label>
+                <input id="password" type="password" name="password" placeholder="Пароль" required autocomplete="off"/>
+            </div>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <button type="submit" class="button button-block">Зарегистрироваться</button>
+        </form>
+    <a href="/api/v1/login">Войти</a>
+<!--        <div th:if="errorMessage">-->
+<!--            <h2 style="color: red">${errorMessage}</h2>-->
+<!--        </div>-->
 
-        <label>Last Name:</label><br>
-        <input type="text" th:field="*{lastName}"><br>
-
-        <label>First Name:</label><br>
-        <input type="text" th:field="*{firstName}"><br>
-
-        <label>Patronymic:</label><br>
-        <input type="text" th:field="*{patronymic}"><br>
-
-        <label>Password*:</label><br>
-        <input type="password" id="password" name="password" th:field="*{password}" required><br>
-        <span id="passwordError" class="error"></span><br>
-        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span><br>
-
-        <input type="submit" value="Register">
-    </form>
-    <a th:href="${link} + @{/sign-in}" class="signInLink">Sign In</a>
 </div>
-
-<script>
-    function validateForm() {
-        var login = document.getElementById('login').value;
-        var password = document.getElementById('password').value;
-        var loginError = document.getElementById('loginError');
-        var passwordError = document.getElementById('passwordError');
-        loginError.textContent = '';
-        passwordError.textContent = '';
-
-        if (login.length < 2) {
-            loginError.textContent = 'Login must be at least 2 characters long';
-            return false;
-        }
-
-        if (password.length < 6) {
-            passwordError.textContent = 'Password must be at least 6 characters long';
-            return false;
-        }
-
-        return true;
-    }
-</script>
+<!--<footer th:insert="~{blocks/footer :: footer}"></footer>-->
 </body>
 </html>

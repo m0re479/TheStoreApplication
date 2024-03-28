@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
-    private MyUser user;
+    private final MyUser user;
 
     public MyUserDetails(MyUser User){
         this.user = User;
@@ -19,8 +19,8 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(user.getRoles().split(", "))
-                .map(SimpleGrantedAuthority::new)
+        return user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
     }
 
@@ -31,7 +31,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return user.getEmail();
     }
 
     @Override
